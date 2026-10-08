@@ -36,17 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('loading');
         document.body.classList.add('loaded');
         if (loadingScreen) {
-            loadingScreen.style.display = 'none';
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 600);
         }
     };
 
     if (loadingScreen && !document.body.classList.contains('loaded')) {
-        // Wait for load or max 1.5s
-        const timer = setTimeout(showPage, 1500);
-        window.addEventListener('load', () => {
-            clearTimeout(timer);
-            setTimeout(showPage, 300); // brief pause after load
-        }, { once: true });
+        // Show the logo reveal for 1.8 seconds (1-2s range)
+        setTimeout(showPage, 1800);
     } else {
         showPage();
     }
