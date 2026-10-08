@@ -30,24 +30,93 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('reduce-motion');
     }
 
-    // 1. Loading Screen
+    // 1. Loading Screen: Random Scissor Cut Sequence (< 1.8s)
     const loadingScreen = document.getElementById('loading-screen');
-    const showPage = () => {
-        document.body.classList.remove('loading');
-        document.body.classList.add('loaded');
-        if (loadingScreen) {
+    const stage = document.querySelector('.loader-stage');
+    const scissors = document.getElementById('loader-scissors');
+    const cutLine = document.querySelector('.loader-cut-line');
+    const leftHalf = document.querySelector('.loader-logo-left');
+    const rightHalf = document.querySelector('.loader-logo-right');
+
+    const runScissorsLoader = () => {
+        if (!loadingScreen || !stage || !leftHalf || !rightHalf || !scissors) {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+            return;
+        }
+
+        // Random cut angle between -35deg and 35deg
+        const randomAngles = [-28, -15, 0, 18, 30, -32, 22];
+        const angle = randomAngles[Math.floor(Math.random() * randomAngles.length)];
+
+        // Set clipping paths according to the cut angle
+        // Diagonal clip line: polygon calculations
+        if (angle === 0) {
+            leftHalf.style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
+            rightHalf.style.clipPath = 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)';
+        } else if (angle > 0) {
+            leftHalf.style.clipPath = 'polygon(0 0, 65% 0, 35% 100%, 0 100%)';
+            rightHalf.style.clipPath = 'polygon(65% 0, 100% 0, 100% 100%, 35% 100%)';
+        } else {
+            leftHalf.style.clipPath = 'polygon(0 0, 35% 0, 65% 100%, 0 100%)';
+            rightHalf.style.clipPath = 'polygon(35% 0, 100% 0, 100% 100%, 65% 100%)';
+        }
+
+        if (cutLine) {
+            cutLine.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        }
+
+        // Timeline (Total ~1.7s):
+        // 0.3s: Scissors appears and swoops across
+        setTimeout(() => {
+            stage.classList.add('slicing');
+            scissors.style.transform = `translate(-140%, -50%) rotate(${angle}deg)`;
+            scissors.style.opacity = '1';
+        }, 150);
+
+        // 0.5s: Scissors cuts through the middle
+        setTimeout(() => {
+            scissors.style.transform = `translate(140%, -50%) rotate(${angle}deg)`;
+            stage.classList.add('sliced');
+
+            // Logo halves separate smoothly
+            const offsetDist = window.innerWidth < 768 ? 16 : 28;
+            const rad = (angle * Math.PI) / 180;
+            const perpX = -Math.sin(rad) * offsetDist;
+            const perpY = Math.cos(rad) * offsetDist;
+
+            leftHalf.style.transform = `translate(${-perpX - 10}px, ${-perpY}px) rotate(${-3}deg)`;
+            leftHalf.style.opacity = '0.7';
+
+            rightHalf.style.transform = `translate(${perpX + 10}px, ${perpY}px) rotate(${3}deg)`;
+            rightHalf.style.opacity = '0.7';
+        }, 550);
+
+        // 1.2s: Both halves fade out gracefully
+        setTimeout(() => {
+            leftHalf.style.opacity = '0';
+            rightHalf.style.opacity = '0';
+            if (cutLine) cutLine.style.opacity = '0';
+            scissors.style.opacity = '0';
+        }, 1200);
+
+        // 1.6s: Dismiss loader and unveil site
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
             loadingScreen.style.opacity = '0';
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
-            }, 600);
-        }
+            }, 500);
+        }, 1600);
     };
 
     if (loadingScreen && !document.body.classList.contains('loaded')) {
-        // Show the logo reveal for 1.8 seconds (1-2s range)
-        setTimeout(showPage, 1800);
+        runScissorsLoader();
     } else {
-        showPage();
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+        if (loadingScreen) loadingScreen.style.display = 'none';
     }
 
     // 2. Navigation

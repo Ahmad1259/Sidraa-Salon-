@@ -109,11 +109,26 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- ============================================================
-       LOADING SCREEN (MILD BLUR WITH CLEAN TRANSPARENT LOGO)
+       LOADING SCREEN: SCISSOR SLICE REVEAL (1.8s)
        ============================================================ -->
   <div id="loading-screen" aria-hidden="true">
-    <div class="loader-logo-container">
-      <img src="assets/images/logo.png" alt="SIDRA'S Logo" class="loader-logo" width="160" height="160">
+    <div class="loader-stage">
+      <div class="loader-logo-half loader-logo-left">
+        <img src="assets/images/logo.png" alt="SIDRA'S Logo" class="loader-img-part">
+      </div>
+      <div class="loader-logo-half loader-logo-right">
+        <img src="assets/images/logo.png" alt="SIDRA'S Logo" class="loader-img-part">
+      </div>
+      <div class="loader-scissors" id="loader-scissors">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="7" stroke="currentColor" stroke-width="2.5"/>
+          <circle cx="16" cy="48" r="7" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M22 20 L54 38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M22 44 L54 26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="38" cy="32" r="2.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="loader-cut-line"></div>
     </div>
   </div>
 
