@@ -1,0 +1,21 @@
+{
+  "name": "SIDRA'S Salon",
+  "short_name": "SIDRA'S",
+  "description": "Premium Beauty Salon in DHA Phase 3, Lahore — Hair, Nail, Makeup & Spa Services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#c9a96e",
+  "icons": [
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
