@@ -1191,14 +1191,16 @@ body.menu-open .mobile-menu-footer {
 
 /* — Hair Transformation — */
 #hair-journey {
-  min-height: 300svh;
+  min-height: 100svh;
   position: relative;
+  background: var(--color-charcoal);
+  overflow: hidden;
 }
 
 .hair-journey-sticky {
-  position: sticky;
-  top: 0;
+  position: relative;
   height: 100svh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1218,7 +1220,11 @@ body.menu-open .mobile-menu-footer {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.01s;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.hair-stage.active {
+  opacity: 1;
 }
 
 .hair-stage img {

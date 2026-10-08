@@ -68,13 +68,13 @@ class ScrollEngine {
         // 1. HAIR TRANSFORMATION JOURNEY — stage switching
         if (this.hairJourney && this.hairStages.length > 0) {
             const progress = this.getProgress(this.hairJourney);
-            if (progress >= 0) {
-                const stageCount = this.hairStages.length;
-                const activeIndex = Math.min(stageCount - 1, Math.floor(progress * stageCount));
-                this.hairStages.forEach((stage, i) => {
-                    stage.classList.toggle('active', i === activeIndex);
-                });
-            }
+            const stageCount = this.hairStages.length;
+            const activeIndex = progress >= 0 
+                ? Math.min(stageCount - 1, Math.floor(progress * stageCount))
+                : 0;
+            this.hairStages.forEach((stage, i) => {
+                stage.classList.toggle('active', i === activeIndex);
+            });
         }
 
         // 2. SCISSORS REVEAL — horizontal travel
